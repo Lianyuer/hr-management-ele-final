@@ -2,20 +2,20 @@
   <div class="login-container">
     <div class="left" />
     <div class="right">
-      <el-form>
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
         <h3 class="loginType">手机号登录</h3>
-        <el-form-item>
-          <el-input v-model="loginformData.mobile" placeholder="请输入手机号" />
+        <el-form-item prop="mobile">
+          <el-input v-model="loginForm.mobile" placeholder="请输入手机号" />
         </el-form-item>
-        <el-form-item>
-          <el-input v-model="loginformData.password" placeholder="请输入密码" show-password />
+        <el-form-item prop="password">
+          <el-input v-model="loginForm.password" placeholder="请输入密码" show-password />
         </el-form-item>
-        <el-form-item>
-          <el-checkbox v-model="loginformData.isAgree" />
+        <el-form-item prop="isAgree">
+          <el-checkbox v-model="loginForm.isAgree" />
           用户平台使用协议
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="loginBtn">登录</el-button>
+          <el-button type="primary" class="loginBtn" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -27,11 +27,47 @@ export default {
   name: 'Login',
   data() {
     return {
-      loginformData: {
+      loginForm: {
         mobile: '13800000002',
         password: 'hm#qd@23!',
         isAgree: true
+      },
+      loginRules: {
+        mobile: [
+          { required: true, message: '请输入手机号', trigger: ['blur', 'change'] },
+          {
+            pattern: /^(?:(?:\+|00)86)?1\d{10}$/,
+            message: '手机号格式不正确',
+            trigger: ['blur', 'change']
+          }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: ['blur', 'change'] },
+          {
+            min: 6,
+            max: 16,
+            message: '密码长度应该为6-16位之间',
+            trigger: 'blur'
+          }
+        ],
+        isAgree: [
+          {
+            validator: (rule, value, callback) => {
+              value ? callback() : callback(new Error('您必须勾选用户的使用协议'))
+            },
+            trigger: ['blur', 'change']
+          }
+        ]
       }
+    }
+  },
+  methods: {
+    login() {
+      this.$refs.loginFormRef.validate((valid) => {
+        if (valid) {
+          console.log('校验通过')
+        }
+      })
     }
   }
 }
