@@ -97,3 +97,12 @@ Modern browsers and Internet Explorer 10+.
 [MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
 
 Copyright (c) 2017-present PanJiaChen
+
+
+
+## 接口文档
+
+- [人资v8.0接口文档](https://apifox.com/apidoc/shared-e2644216-aad4-4529-a630-78f0631ab076)
+
+- [ 人资讲义 ](https://www.yuque.com/shuiruohanyu/agxcua)
+
