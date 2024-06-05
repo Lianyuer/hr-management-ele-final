@@ -9,9 +9,9 @@ const request1 = axios.create({
 
 // 添加请求拦截器
 request1.interceptors.request.use(function (config) {
-  const token = store.state.token
+  const token = store.getters.token
   if (token) {
-    config.headers.Authorization = `Bearer {${token}}`
+    config.headers.Authorization = `Bearer ${token}`
   }
   // 在发送请求之前做些什么
   return config
