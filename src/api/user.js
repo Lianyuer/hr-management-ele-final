@@ -16,3 +16,12 @@ export const login = (data) => {
   })
 }
 
+/**
+ * 获取用户基本资料
+ */
+export const getUserInfo = () => {
+  return request1({
+    method: 'get',
+    url: '/sys/profile'
+  })
+}
