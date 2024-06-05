@@ -62,12 +62,10 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$refs.loginFormRef.validate((valid) => {
-        if (valid) {
-          console.log('校验通过')
-        }
-      })
+    async login() {
+      await this.$refs.loginFormRef.validate()
+      // console.log('校验通过')
+      this.$store.dispatch('user/login', this.loginForm)
     }
   }
 }
