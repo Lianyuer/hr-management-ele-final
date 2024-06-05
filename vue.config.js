@@ -35,6 +35,11 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    proxy: {
+      '/api': {
+        target: 'https://heimahr.itheima.net'
+      }
     }
     // before: require('./mock/mock-server.js')
   },
