@@ -36,6 +36,7 @@ const actions = {
   // 退出登录
   logout(context) {
     context.commit('removeToken')
+    context.commit('setUserInfo', {})
   }
 }
 
