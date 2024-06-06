@@ -11,7 +11,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="staffPhoto" class="user-avatar" />
+          <img v-if="staffPhoto" :src="staffPhoto" class="user-avatar" />
+          <span v-else class="username-o">{{ username?.charAt(0) }}</span>
           <p class="user-name">{{ username }}</p>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -131,6 +132,15 @@ export default {
           margin: 0;
           font-size: 16px;
           margin-right: 45px;
+        }
+        .username-o {
+          background-color: lightcoral;
+          border-radius: 20px;
+          width: 35px;
+          height: 35px;
+          line-height: 35px;
+          text-align: center;
+          font-size: 16px;
         }
       }
     }
