@@ -11,8 +11,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="0 + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
+          <img :src="staffPhoto" class="user-avatar" />
+          <p class="user-name">{{ username }}</p>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
@@ -44,7 +44,7 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters(['sidebar'])
+    ...mapGetters(['sidebar', 'username', 'staffPhoto'])
   },
   methods: {
     toggleSideBar() {
@@ -115,22 +115,22 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
+        // margin-top: 5px;
         position: relative;
+        display: flex;
+        align-items: center;
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
           border-radius: 10px;
+          margin-right: 18px;
         }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
+        .user-name {
+          margin: 0;
+          font-size: 16px;
+          margin-right: 45px;
         }
       }
     }
