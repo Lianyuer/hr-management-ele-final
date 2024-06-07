@@ -6,6 +6,7 @@
     :fullscreen="fullscreen"
     @close="handleClose"
   >
+    <slot name="body" />
     <span slot="footer" class="dialog-footer">
       <el-button @click="handleClose">取 消</el-button>
       <el-button type="primary" @click="onConfirm">确 定</el-button>
