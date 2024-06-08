@@ -22,8 +22,8 @@
           <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item>项目地址</el-dropdown-item>
           </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>修改密码</el-dropdown-item>
+          <a target="_self" href="javascript:;">
+            <el-dropdown-item @click.native="changePwd">修改密码</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
             <span style="display: block">登出</span>
@@ -31,6 +31,17 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <MyDialog
+      ref="pwdDialogRef"
+      :on-confirm="onConfirm"
+      :on-close="onClose"
+      width="35%"
+      title="修改密码"
+    >
+      <template #body>
+        <MyForm ref="pwdFormRef" :form-item="formItem" :form-data="formData" :rules="rules" />
+      </template>
+    </MyDialog>
   </div>
 </template>
 
@@ -39,13 +50,42 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
+import MyDialog from '@/components/CustomDialog'
+import MyForm from '@/components/CustomForm'
+import pwdConfig from '@/components/CustomForm/config/pwdConfig'
+import { updatePassword } from '@/api/user'
+
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    MyDialog,
+    MyForm
+  },
+  data() {
+    return {
+      formItem: pwdConfig.formItem ?? [],
+      formData: {},
+      rules: {}
+    }
   },
   computed: {
     ...mapGetters(['sidebar', 'username', 'staffPhoto'])
+  },
+  watch: {
+    'formData.newPassword'(newValue, oldValue) {
+      console.log(newValue)
+      sessionStorage.setItem('newPwd', newValue)
+    }
+  },
+  created() {
+    this.formItem.forEach((item) => {
+      // 初始化表单数据
+      this.$set(this.formData, item.field, item.type === 'switch' ? false : '')
+      // 初始化表单校验规则
+      this.$set(this.rules, item.prop, item.rule)
+    })
+    console.log(this.rules, 'rules')
   },
   methods: {
     toggleSideBar() {
@@ -55,6 +95,20 @@ export default {
       await this.$store.dispatch('user/logout')
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
       this.$router.push(`/login`)
+    },
+    changePwd() {
+      this.$refs.pwdDialogRef.dialogVisible = true
+    },
+    async onConfirm() {
+      await this.$refs.pwdFormRef.$refs.pwdRef.validate() // 表单校验
+      await updatePassword(this.formData)
+      this.$message({ type: 'success', message: '密码更新成功' })
+      this.onClose()
+    },
+    onClose() {
+      this.$refs.pwdDialogRef.dialogVisible = false // 关闭弹框
+      this.$refs.pwdFormRef.$refs.pwdRef.resetFields() // 重置表单
+      sessionStorage.removeItem('newPwd') // 清除会话保存的新密码
     }
   }
 }

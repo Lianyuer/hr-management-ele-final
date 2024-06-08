@@ -25,3 +25,18 @@ export const getUserInfo = () => {
     url: '/sys/profile'
   })
 }
+
+/**
+ *
+ * @param {Object} data
+ * @param {String} data.oldPassword 旧密码
+ * @param {String} data.newPassword 新密码
+ * @returns
+ */
+export const updatePassword = (data) => {
+  return request1({
+    method: 'put',
+    url: '/sys/user/updatePass',
+    data
+  })
+}
