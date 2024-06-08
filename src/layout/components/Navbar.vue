@@ -180,7 +180,7 @@ export default {
           width: 30px;
           height: 30px;
           border-radius: 10px;
-          margin-right: 18px;
+          margin-right: 10px;
         }
         .user-name {
           margin: 0;
@@ -190,11 +190,12 @@ export default {
         .username-o {
           background-color: lightcoral;
           border-radius: 20px;
-          width: 35px;
-          height: 35px;
-          line-height: 35px;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
           text-align: center;
-          font-size: 16px;
+          font-size: 14px;
+          margin-right: 10px;
         }
       }
     }
