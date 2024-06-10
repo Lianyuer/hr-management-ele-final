@@ -6,7 +6,7 @@ export default {
   redirect: '/employee',
   children: [{
     path: '/employee',
-    name: 'approval',
+    name: 'employee',
     component: () => import('@/views/employee/index'),
     meta: { title: '员工', icon: 'people' }
   }]

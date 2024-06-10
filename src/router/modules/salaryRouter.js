@@ -6,7 +6,7 @@ export default {
   redirect: '/salary',
   children: [{
     path: '/salary',
-    name: 'approval',
+    name: 'salary',
     component: () => import('@/views/salary/index'),
     meta: { title: '薪资', icon: 'money' }
   }]

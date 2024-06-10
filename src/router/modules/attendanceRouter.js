@@ -6,7 +6,7 @@ export default {
   redirect: '/attendance',
   children: [{
     path: '/attendance',
-    name: 'approval',
+    name: 'attendance',
     component: () => import('@/views/attendance/index'),
     meta: { title: '考勤', icon: 'excel' }
   }]

@@ -6,7 +6,7 @@ export default {
   redirect: '/role',
   children: [{
     path: '/role',
-    name: 'approval',
+    name: 'role',
     component: () => import('@/views/role/index'),
     meta: { title: '角色', icon: 'setting' }
   }]

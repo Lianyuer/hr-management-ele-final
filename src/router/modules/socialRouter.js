@@ -6,7 +6,7 @@ export default {
   redirect: '/social',
   children: [{
     path: '/social',
-    name: 'approval',
+    name: 'social',
     component: () => import('@/views/social/index'),
     meta: { title: '社保', icon: 'table' }
   }]

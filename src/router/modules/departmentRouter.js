@@ -6,7 +6,7 @@ export default {
   redirect: '/department',
   children: [{
     path: '/department',
-    name: 'approval',
+    name: 'department',
     component: () => import('@/views/department/index'),
     meta: { title: '组织', icon: 'tree' }
   }]

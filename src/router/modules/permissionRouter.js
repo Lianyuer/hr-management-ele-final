@@ -6,7 +6,7 @@ export default {
   redirect: '/permission',
   children: [{
     path: '/permission',
-    name: 'approval',
+    name: 'permission',
     component: () => import('@/views/permission/index'),
     meta: { title: '权限', icon: 'lock' }
   }]
