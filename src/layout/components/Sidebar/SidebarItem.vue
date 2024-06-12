@@ -3,8 +3,8 @@
     <template
       v-if="
         hasOneShowingChild(item.children, item) &&
-          (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
-          !item.alwaysShow
+        (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+        !item.alwaysShow
       "
     >
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
@@ -107,7 +107,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.router-link-active {
+::v-deep .router-link-active {
   background: linear-gradient(90deg, #205af0, #1e3cae 25%, rgba(30, 60, 174, 0));
+  li {
+    span,
+    svg {
+      color: #fff !important;
+    }
+  }
 }
 </style>
