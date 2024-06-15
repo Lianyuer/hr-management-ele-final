@@ -11,13 +11,17 @@
       <template v-if="item.type === 'input'">
         <el-input
           v-model="formData[item.field]"
+          :type="item.iptType"
+          :rows="item.rows"
           :style="`width:${iptWidth}`"
           :show-password="item.isPwd"
+          :placeholder="item.placeholder"
         />
       </template>
       <template v-else-if="item.type === 'select'">
         <el-select
           v-model="formData[item.field]"
+          :placeholder="item.placeholder"
           @change="
             (e) => {
               issueEvent(e, item.onChange)
@@ -33,7 +37,7 @@
         </el-select>
       </template>
       <template v-else-if="item.type === 'switch'">
-        <el-switch v-model="formData[item.field]" />
+        <el-switch v-model="formData[item.field]" :placeholder="item.placeholder" />
       </template>
     </el-form-item>
     <slot name="footer" />
