@@ -9,3 +9,13 @@ export const getDept = () => {
     url: '/company/department'
   })
 }
+/**
+ * 获取-部门负责人列表
+ * @returns
+ */
+export const getManagerList = () => {
+  return request1({
+    url: '/sys/user/simple'
+  })
+}
+
