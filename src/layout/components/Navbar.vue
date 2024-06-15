@@ -99,14 +99,14 @@ export default {
       this.$refs.pwdDialogRef.dialogVisible = true
     },
     async onConfirm() {
-      await this.$refs.pwdFormRef.$refs.pwdRef.validate() // 表单校验
+      await this.$refs.pwdFormRef.$refs.formRef.validate() // 表单校验
       await updatePassword(this.formData)
       this.$message({ type: 'success', message: '密码更新成功' })
       this.onClose()
     },
     onClose() {
       this.$refs.pwdDialogRef.dialogVisible = false // 关闭弹框
-      this.$refs.pwdFormRef.$refs.pwdRef.resetFields() // 重置表单
+      this.$refs.pwdFormRef.$refs.formRef.resetFields() // 重置表单
       sessionStorage.removeItem('newPwd') // 清除会话保存的新密码
     }
   }

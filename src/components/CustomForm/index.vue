@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="pwdRef" :model="formData" :rules="rules">
+  <el-form ref="formRef" :model="formData" :rules="rules">
     <slot name="header" />
     <el-form-item
       v-for="(item, index) in formItem"
