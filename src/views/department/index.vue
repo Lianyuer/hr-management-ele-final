@@ -7,7 +7,7 @@
             <span class="managerName">
               {{ row.managerName }}
             </span>
-            <el-dropdown @command="handleCommand">
+            <el-dropdown @command="handleCommand($event, row.id)">
               <span class="el-dropdown-link">
                 操作
                 <i class="el-icon-arrow-down el-icon--right" />
@@ -41,7 +41,7 @@ import MyTree from '@/components/CustomTree'
 import MyDialog from '@/components/CustomDialog'
 import MyForm from '@/components/CustomForm'
 import { getFormItem } from '@/components/CustomForm/config/deptbehaviorConfig'
-import { getDept } from '@/api/department'
+import { getDept, addDept } from '@/api/department'
 import { transListToTree } from '@/utils/transListToTree'
 export default {
   name: 'Department',
@@ -94,7 +94,8 @@ export default {
         title: '新增子部门',
         formItem: [],
         formData: {},
-        rules: {}
+        rules: {},
+        currNodeId: null
       }
     }
   },
@@ -112,15 +113,18 @@ export default {
     async getDept() {
       const res = await getDept()
       this.deptList = transListToTree(res, 0)
-      console.log(this.deptList, 'this.deptList')
     },
     // 显示弹框
-    handleCommand(command) {
+    handleCommand(type, id) {
       this.$refs.dialogRef.dialogVisible = true
-      if (command === 'add') {
+      if (type === 'add') {
         this.behavior.title = '添加子部门'
-      } else if (command === 'edit') {
+        this.behavior.type === 'add'
+        this.behavior.currNodeId = id
+        console.log(id)
+      } else if (type === 'edit') {
         this.behavior.title = '编辑部门'
+        this.behavior.type === 'edit'
       } else {
         this.onClose()
         console.log('删除')
@@ -134,6 +138,12 @@ export default {
     // 确认提交
     async onConfirm() {
       await this.$refs.deptformRef.$refs.formRef.validate()
+      if (this.behavior.type === 'add') {
+        await addDept({ ...this.behavior.formData, pid: this.behavior.currNodeId })
+        this.$message.success('添加成功')
+        this.getDept()
+        this.onClose()
+      }
     }
   }
 }

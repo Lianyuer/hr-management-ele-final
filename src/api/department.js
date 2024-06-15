@@ -19,3 +19,13 @@ export const getManagerList = () => {
   })
 }
 
+/**
+ * 新增-部门
+ */
+export const addDept = (data) => {
+  return request1({
+    method: 'post',
+    url: '/company/department',
+    data
+  })
+}
