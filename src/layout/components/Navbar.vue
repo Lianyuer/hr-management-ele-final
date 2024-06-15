@@ -85,7 +85,6 @@ export default {
       // 初始化表单校验规则
       this.$set(this.rules, item.prop, item.rule)
     })
-    console.log(this.rules, 'rules')
   },
   methods: {
     toggleSideBar() {
