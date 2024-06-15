@@ -13,7 +13,8 @@ export const getFormItem = async () => {
         size: 'mini',
         placeholder: '2-10个字符',
         rule: [
-          { required: true, message: '部门名称不能为空', trigger: ['blur', 'change'] }
+          { required: true, message: '部门名称不能为空', trigger: ['blur', 'change'] },
+          { min: 2, max: 10, message: '长度为2-10字符', trigger: ['blur', 'change'] }
         ]
       },
       {
@@ -24,7 +25,8 @@ export const getFormItem = async () => {
         size: 'mini',
         placeholder: '2-10个字符',
         rule: [
-          { required: true, message: '部门编码不能为空', trigger: ['blur', 'change'] }
+          { required: true, message: '部门编码不能为空', trigger: ['blur', 'change'] },
+          { min: 2, max: 10, message: '长度为2-10字符', trigger: ['blur', 'change'] }
         ]
       },
       {
@@ -48,7 +50,8 @@ export const getFormItem = async () => {
         field: 'introduce',
         placeholder: '1-100个字符',
         rule: [
-          { required: true, message: '部门介绍不能为空', trigger: ['blur', 'change'] }
+          { required: true, message: '部门介绍不能为空', trigger: ['blur', 'change'] },
+          { min: 1, max: 100, message: '长度为1-100字符', trigger: ['blur', 'change'] }
         ]
       }
     ]
