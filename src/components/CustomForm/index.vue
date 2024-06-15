@@ -13,6 +13,7 @@
           v-model="formData[item.field]"
           :type="item.iptType"
           :rows="item.rows"
+          :size="item.size"
           :style="`width:${iptWidth}`"
           :show-password="item.isPwd"
           :placeholder="item.placeholder"
@@ -21,6 +22,7 @@
       <template v-else-if="item.type === 'select'">
         <el-select
           v-model="formData[item.field]"
+          :size="item.size"
           :placeholder="item.placeholder"
           @change="
             (e) => {
@@ -30,14 +32,18 @@
         >
           <el-option
             v-for="optItem in item.option"
-            :key="optItem.value"
-            :label="optItem.label"
-            :value="optItem.value"
+            :key="optItem.id"
+            :label="optItem.username"
+            :value="optItem.id"
           />
         </el-select>
       </template>
       <template v-else-if="item.type === 'switch'">
-        <el-switch v-model="formData[item.field]" :placeholder="item.placeholder" />
+        <el-switch
+          v-model="formData[item.field]"
+          :placeholder="item.placeholder"
+          :size="item.size"
+        />
       </template>
     </el-form-item>
     <slot name="footer" />
