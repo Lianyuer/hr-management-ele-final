@@ -7,32 +7,48 @@
             <span class="managerName">
               {{ row.managerName }}
             </span>
-            <el-dropdown>
+            <el-dropdown @command="handleCommand">
               <span class="el-dropdown-link">
                 操作
                 <i class="el-icon-arrow-down el-icon--right" />
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>添加子部门</el-dropdown-item>
-                <el-dropdown-item>编辑部门</el-dropdown-item>
-                <el-dropdown-item>删除</el-dropdown-item>
+                <el-dropdown-item command="add">添加子部门</el-dropdown-item>
+                <el-dropdown-item command="edit">编辑部门</el-dropdown-item>
+                <el-dropdown-item command="del">删除</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
         </template>
       </MyTree>
+      <MyDialog ref="dialogRef" :title="behavior.title" :on-close="onClose" :on-confirm="onConfirm">
+        <template #body>
+          <MyForm
+            ref="deptformRef"
+            :form-item="behavior.formItem"
+            :form-data="behavior.formData"
+            :rules="behavior.rules"
+            label-width="150px"
+          />
+        </template>
+      </MyDialog>
     </div>
   </div>
 </template>
 
 <script>
 import MyTree from '@/components/CustomTree'
+import MyDialog from '@/components/CustomDialog'
+import MyForm from '@/components/CustomForm'
+import { getFormItem } from '@/components/CustomForm/config/deptbehaviorConfig'
 import { getDept } from '@/api/department'
 import { transListToTree } from '@/utils/transListToTree'
 export default {
   name: 'Department',
   components: {
-    MyTree
+    MyTree,
+    MyDialog,
+    MyForm
   },
   data() {
     return {
@@ -72,17 +88,52 @@ export default {
           ]
         }
       ],
-      deptList: []
+      deptList: [],
+      behavior: {
+        type: 'add',
+        title: '新增子部门',
+        formItem: [],
+        formData: {},
+        rules: {}
+      }
     }
   },
-  created() {
+  async created() {
     this.getDept()
+    this.behavior.formItem = await getFormItem()
+    // 初始化表单数据和校验规则
+    this.behavior.formItem.forEach((item) => {
+      this.$set(this.behavior.formData, item.field, '')
+      this.$set(this.behavior.rules, item.prop, item.rule)
+    })
   },
   methods: {
+    // 获取组织架构
     async getDept() {
       const res = await getDept()
       this.deptList = transListToTree(res, 0)
       console.log(this.deptList, 'this.deptList')
+    },
+    // 显示弹框
+    handleCommand(command) {
+      this.$refs.dialogRef.dialogVisible = true
+      if (command === 'add') {
+        this.behavior.title = '添加子部门'
+      } else if (command === 'edit') {
+        this.behavior.title = '编辑部门'
+      } else {
+        this.onClose()
+        console.log('删除')
+      }
+    },
+    // 关闭弹框
+    onClose() {
+      this.$refs.dialogRef.dialogVisible = false
+      this.$refs.deptformRef.$refs.formRef.resetFields()
+    },
+    // 确认提交
+    async onConfirm() {
+      await this.$refs.deptformRef.$refs.formRef.validate()
     }
   }
 }
